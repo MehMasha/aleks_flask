@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import random
 
 from flask_sqlalchemy import SQLAlchemy
@@ -22,11 +22,7 @@ def hello_world(id):
 @app.route("/<id>/<route>")
 def new(id, route):
     items = Item.query.filter_by(user_id=id).all()
-    s = '<p>'
-    for i in items:
-        s += i.text + '<br>'
-    s += '</p>'
-    return s
+    return render_template('index.html', info=items, user_id=id)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
